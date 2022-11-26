@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Josefin+Sans:ital,wght@0,100;0,300;0,400;0,600;1,600;1,700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;1,200;1,300&family=Oswald:wght@300;500&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Roboto:wght@300;400;500;700&family=Signika+Negative:wght@500;600&display=swap');
+html{
+    min-height: 520%;
+}
 body{
     margin:0;
     font-family: 'Playfair Display', serif;
@@ -6,11 +9,16 @@ body{
     line-height: 1.5em;
     text-justify: distribute;
     scroll-behavior: smooth;
-
+    height: auto;
     background: linear-gradient(135deg, #8fe9e3, #fffbf0, #e4cf97) no-repeat center;
-    background-size: cover;
+    /* background-size: cover; */
+   
 }
-
+em{
+    font-family: 'Playfair Display', serif;
+    font: italic;
+    text-align: center;
+}
 a{
     color: black;
     text-decoration: none;
@@ -21,6 +29,24 @@ a:hover{
     transition: .3s;
 }
 
+.nav{
+    padding: 1em;
+}
+.fixed-top.scrolled {
+    background-color: rgb(255, 251, 251) !important;
+    transition: background-color 500ms linear;
+    box-shadow: 5px 5px 5px #919899;
+    padding: 0.5em;
+    
+  }
+#logo{
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1em;
+}
+
+h1{
+    margin-top: 1em;
+}
 .profilo{
     width: 200px;
     min-width: 200px;
@@ -59,7 +85,13 @@ ul, li{
     font-weight: 400;
     font-size: 0.5em;
 }
-
+.github, .linkedin, .resume{
+    color: black;
+    padding: 5px;
+   
+    border-radius: 50%;
+   
+}
 
 ol > li{
     font-family: 'Montserrat', sans-serif;
@@ -68,6 +100,7 @@ ol > li{
 }
 .card-title{
     font-weight: 700;
+    height: 3em;
 }
 .card{
     height: 30rem;
@@ -95,4 +128,14 @@ ol > li{
 
 .card-body .card-text{
     height: 9rem;
+}
+
+.others-section strong{
+    color:#867851;
+}
+
+hr{
+    margin: 3px;
+    border: none;
+    border-bottom: 2px white solid;
 }
