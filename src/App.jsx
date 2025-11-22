@@ -70,7 +70,7 @@ function RendererFix() {
   gl.outputColorSpace = THREE.SRGBColorSpace
 
   gl.toneMapping = THREE.ACESFilmicToneMapping
-  gl.toneMappingExposure = 0.2
+  gl.toneMappingExposure = 0.12
 
   return null
 }
