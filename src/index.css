@@ -1,0 +1,704 @@
+/* ---------- Global ---------- */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #050505;
+  color: #ffffff;
+  font-family: "Source San 3";
+  font-weight: 350;
+
+}
+
+/* ---------- Hero layout (no grid) ---------- */
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #050505;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Canvas: full-height, slightly shifted to the right */
+.hero-canvas-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;                 /* 👈 move the whole canvas a bit right */
+  right: -20vw;               /* extend past the right edge so it stays full */
+  overflow: hidden;
+  background: radial-gradient(
+    circle at center,
+    #1a1a1a 0%,
+    #0d0d0d 55%,
+    #050505 100%
+  );
+
+}
+
+.hero-canvas-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.hero-canvas-wrapper.loaded canvas {
+  opacity: 1;
+}
+/* Fullscreen overlay, centers everything */
+.loading-wrapper {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #050505;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Inner container that holds both animation + text */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 320px;
+  max-width: 90vw;
+}
+
+/* Lottie size */
+.lottie-wrapper {
+  width: 150px;
+  height: 150px;
+}
+
+/* Typing text wrapper */
+.typing-loader {
+  width: 320px;
+  max-width: 90vw;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+
+
+
+
+/* ---------- Floating left gradient panel ---------- */
+.hero-panel-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 30vw;               /* width of the overlay area */
+  z-index: 5;
+  pointer-events: none;
+
+  /* black → transparent gradient overlay over the canvas */
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.96) 0%,
+    rgba(0, 0, 0, 0.82) 30%,
+    rgba(0, 0, 0, 0.45) 60%,
+    rgba(0, 0, 0, 0.0) 85%,
+    rgba(185, 124, 124, 0) 100%
+  );
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 5vw;
+}
+
+/* Card container just for text; background is now the panel */
+.hero-card {
+  pointer-events: auto;
+  max-width: 26rem;
+  padding: 2rem 2.4rem;
+  border-radius: 1.2rem;
+  background: transparent;
+  box-shadow: none;
+  transform: translateX(0);
+}
+
+/* ---------- Typography ---------- */
+.hero-text {
+  max-width: 100%;
+}
+
+.hero-eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin: 0 0 0.5rem;
+  color: #bbbbbb;
+}
+
+.hero-title {
+  margin: 0 0 0.8rem;
+  font-family: "Impact";
+  font-weight: 700;
+
+  font-size: 2.4rem;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  color: #f5f5f5;
+}
+
+.hero-title span {
+  color: #ffb0a0;
+}
+
+.hero-subtitle {
+  max-width: 600px; /* keeps text readable */
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #ccc; /* softer than pure white */
+  margin-top: 1rem;
+}
+
+.hero-subtitle .highlight {
+  font-weight: 500;
+}
+.hero-tags{
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin: 0 0 0.5rem;
+  color: #d8d6d6;
+}
+
+/* ---------- Arrow button (if you still use it) ---------- */
+.hero-next-btn {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.6rem;
+  background: none;
+  border: none;
+  color: #f5f5f5;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.hero-next-btn:hover {
+  transform: translateX(-50%) translateY(3px);
+}
+
+/* ---------- Fade animation ---------- */
+.fade-up {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUpIn 0.2s ease-out forwards;
+}
+
+@keyframes fadeUpIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Section icon bar ---------- */
+.section-icon-bar {
+  position: fixed;
+  right: 2rem;
+  bottom: 1.5rem;
+  display: flex;
+  gap: 0.75rem;
+  z-index: 20;
+  background: linear-gradient(90deg,rgba(245, 233, 164, 0.4) 0%, rgba(212, 155, 155, 0.4) 100%);
+  padding: 0.6rem 1rem;
+  border-radius: 1.5rem;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.section-icon {
+  font-size: 1.25rem;
+  color: #aaa;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  padding: 0.25rem 0.4rem;
+}
+
+.section-icon:hover {
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.section-icon.active {
+  color: #ffb0a0;
+  text-shadow: 0 0 10px rgba(255, 176, 160, 0.7);
+}
+
+
+/* ------- Project modal ------- */
+
+.project-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: url("../src/assets/parks.jpeg") center/cover no-repeat;
+  background-color: rgba(0, 0, 0, 0.4); /* dark overlay with transparency */
+  background-blend-mode: darken; /* blends image with overlay */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-modal-backdrop.open {
+  opacity: 1;
+}
+
+.project-modal-backdrop.closing {
+  opacity: 0;
+}
+
+
+.project-modal {
+  position: relative;
+  max-width: 28rem;
+  width: 90%;
+  border-radius: 1.2rem;
+  padding: 1.8rem 2.1rem 2.1rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  color: #f5f5f5;
+  overflow: hidden; /* Important for rounded corners */
+
+  /* start slightly lower & smaller */
+  opacity: 0;
+  transform: translateY(5px) scale(0.96);
+
+  /* ✨ only animate the card */
+  animation: modalCardIn 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+/* Blurred background image */
+.project-modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../src/assets/building.jpeg") center/cover no-repeat;
+  filter: blur(2px);
+  z-index: 0;
+}
+
+/* Dark gray overlay */
+.project-modal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6); /* dark gray with transparency */
+  z-index: 1;
+}
+
+/* Ensure modal content stays above both layers */
+.project-modal * {
+  position: relative;
+  z-index: 2;
+}
+
+.project-modal-close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.9rem;
+  border: none;
+  background: transparent;
+  color: #888;
+  font-size: 1.4rem;
+  cursor: pointer;
+   transition: opacity 0.25s ease, transform 0.25s ease, color 0.25s ease;
+}
+
+.project-modal-close:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+/* 🔥 fade-out animation */
+.project-modal-close.closing {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.project-modal-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin: 0 0 0.5rem;
+}
+
+.project-modal-title {
+  margin: 0 0 0.4rem;
+  font-size: 1.6rem;
+}
+
+.project-modal-subtitle {
+  margin: 0 0 0.8rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.project-modal-body {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;       
+  opacity: 0.9;
+  padding-left: .3rem;
+  list-style: none; /* Remove default bullets */
+}
+
+.project-modal-body li {
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-left: 1.5rem; /* Space for icon */
+}
+
+.project-modal-body li::before {
+  content: "🎨";
+  position: absolute;
+  left: 0;
+} 
+.project-modal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+  color: #ffb0a0;
+  text-decoration: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.project-modal-link:hover {
+  text-decoration: underline;
+  transform: translateY(-1px);
+}
+
+/* ✨ Card pop-in keyframes only */
+@keyframes modalCardIn {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+}
+
+/* ---------- CV Modal ---------- */
+
+.cv-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+.cv-modal-content {
+  position: relative;
+
+  background: url("./assets/building.jpg") center/cover no-repeat;
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+
+  border: 1px solid rgba(255, 255, 255, 0.04); /* ultra faint */
+  border-radius: 16px;
+  padding: 20px;
+
+  max-width: 850px;
+  width: 90vw;
+  max-height: 90vh;
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.55);
+}
+
+.cv-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-width: thin;                /* Firefox */
+  scrollbar-color: #666 transparent;    /* Firefox */
+}
+
+/* Chrome / Edge / Safari */
+.cv-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cv-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cv-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+}
+
+.cv-modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.cv-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+.cv-page-wrapper {
+  margin: 12px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.cv-page-wrapper canvas {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+}
+
+/* ---------- Loading Screen ---------- */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0d0d0d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+.loading-overlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-content {
+  text-align: center;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+}
+
+/* Simple minimal spinner */
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Spotify Playlist Modal ---------- */
+
+/* Fullscreen modal with subtle blur ONLY */
+.spotify-modal-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(147, 147, 147, 0.25); /* light tint but NOT dark */
+  backdrop-filter: blur(10px);      /* 🔥 subtle glass blur */
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999;
+
+  opacity: 0;                    /* start invisible */
+  pointer-events: none;
+  transform: scale(0.97);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.spotify-modal-container.visible {
+  pointer-events: auto;
+}
+.spotify-modal-container.visible.loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.spotify-modal-container.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+/* Floating player */
+.spotify-player-box {
+  position: relative;
+  width: min(500px, 90vw);
+  padding: 1rem;
+  border-radius: 16px;
+  background: transparent;
+
+}
+
+.spotify-modal-body {
+  width: 100%;
+}
+
+
+/* Close button BELOW player */
+.spotify-modal-close-bottom {
+  position: absolute;
+  bottom: 1.5rem;          /* space from bottom */
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background: none;
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.spotify-modal-close-bottom:hover {
+  transform: translateX(-50%) translateY(-3px);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  position: absolute;
+  bottom: .2em;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  margin-top: 4rem;
+  padding-bottom: 1.5rem;
+  opacity: 0.6;
+}
+
+.site-footer hr {
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto 0.5rem;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.site-footer p {
+  font-size: 0.8rem;
+}
+
+
+/* ---------- Responsive: stack panel on top, canvas below ---------- */
+@media (max-width: 768px) {
+  .hero {
+    position: relative;
+    height: 80vh;
+    overflow: hidden;
+  }
+
+  /* Text panel becomes a normal block at the top */
+  .hero-panel-left {
+    position: relative;
+    order: 1;                     /* ⬆️ first on mobile */
+    width: 100vw;
+    height: auto;
+    padding: 3em 2em;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.96) 0%,
+      rgba(0, 0, 0, 0.85) 40%,
+      rgba(0, 0, 0, 0.0) 100%
+    );
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    pointer-events: auto;         /* allow clicks */
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+
+  .hero-card {
+    max-width: 100%;
+    padding: 1.2rem 0;
+  }
+
+  /* Canvas becomes a block section under the text */
+  .hero-canvas-wrapper {
+    position: relative;
+    order: 2;                     /* ⬇️ second on mobile */
+    top: auto;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 30vh;                 /* adjust as you like */
+    overflow: hidden;
+    background: radial-gradient(
+      circle at center,
+      #1a1a1a 0%,
+      #0d0d0d 55%,
+      #050505 100%
+    );
+  }
+
+  .hero-canvas-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* Optional: move the icon bar up a bit on small screens */
+  .section-icon-bar {
+    right: 1.5rem;
+    bottom: 4rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  .site-footer {
+    display: none;
+  }
+}
