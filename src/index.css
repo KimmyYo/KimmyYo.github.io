@@ -10,6 +10,7 @@ body,
   color: #ffffff;
   font-family: "Source San 3";
   font-weight: 350;
+  overflow: hidden;
 
 }
 
@@ -636,6 +637,10 @@ body,
 
 /* ---------- Responsive: stack panel on top, canvas below ---------- */
 @media (max-width: 768px) {
+   body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif;
+  }
   .hero {
     position: relative;
     height: 80vh;
