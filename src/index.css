@@ -656,6 +656,7 @@ body,
     width: 100vw;
     height: auto;
     padding: 3em 2em;
+    padding-top: 1.5em;
     padding-bottom: 0em;
     background: linear-gradient(
       180deg,
@@ -680,7 +681,7 @@ body,
     position: relative;
     order: 2;                   
     top: auto;
-    bottom: 3em;
+    bottom: 2em;
     left: 0;
     right: 0;
     width: 100%;
