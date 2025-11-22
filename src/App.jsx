@@ -70,7 +70,7 @@ function RendererFix() {
   gl.outputColorSpace = THREE.SRGBColorSpace
 
   gl.toneMapping = THREE.ACESFilmicToneMapping
-  gl.toneMappingExposure = 1.0
+  gl.toneMappingExposure = 0.5
 
   return null
 }
@@ -184,7 +184,7 @@ export default function App() {
                     This is <span>Yachi Yu</span>
                   </h1>
                   <p className="hero-subtitle">
-                    I build interactive systems that blend code, visuals, and urban data into functional and immersive experiences.
+                    I love to build interactive systems that blend code, visuals, and urban data into functional and immersive experiences.
                   </p>
                   <div className="hero-tags">
                     #Urban · #Graphics · #AI
@@ -199,7 +199,7 @@ export default function App() {
                     Inside the <span>Gallery</span>
                   </h1>
                   <p className="hero-subtitle">
-                    Every piece here reflects how I use computation and design to build immersive, interactive worlds.
+                    Welcome to my gallery. <br/>Take a breath and explore what’s inside.
                   </p>
                 </div>
               )}
@@ -211,7 +211,7 @@ export default function App() {
                     On <span>Display</span>
                   </h1>
                   <p className="hero-subtitle">
-                    Using data, AI, and interactive systems to explore and solve urban challenges.
+                    These computer graphics pieces link to projects that blend data, AI, and interactive systems to explore the complexities of urban life.
                   </p>
                   <div className="hero-tags">
                     #ML · #Systems · #Vision · #NLP · #AR
@@ -258,13 +258,6 @@ export default function App() {
             >
               <RendererFix />
               <color attach="background" args={['#050505']} />
-
-              <ambientLight intensity={0.2} />
-              <directionalLight
-                position={[4, 6, 3]}
-                intensity={0.3}
-                color={'#fff4e5'}
-              />
 
               <Suspense fallback={null}>
                 <MuseumModel 
@@ -323,10 +316,12 @@ export default function App() {
           />
 
          {spotifyInitialized && (
-          <SpotifyPlaylistModal
-            isVisible={spotifyVisible}
-            onClose={closePlaylist}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <SpotifyPlaylistModal
+              isVisible={spotifyVisible}
+              onClose={closePlaylist}
+            />
+          </Suspense>
         )}
         </section>
         <footer className="site-footer">

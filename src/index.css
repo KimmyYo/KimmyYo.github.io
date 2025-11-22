@@ -1,4 +1,5 @@
 /* ---------- Global ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
 html,
 body,
 #root {
@@ -262,7 +263,7 @@ body,
 .project-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: url("../src/assets/parks.jpeg") center/cover no-repeat;
+  background: url("/images/parks.jpeg") center/cover no-repeat;
   background-color: rgba(0, 0, 0, 0.4); /* dark overlay with transparency */
   background-blend-mode: darken; /* blends image with overlay */
   backdrop-filter: blur(8px);
@@ -308,7 +309,7 @@ body,
   content: "";
   position: absolute;
   inset: 0;
-  background: url("../src/assets/building.jpeg") center/cover no-repeat;
+  background: url("/images/building.jpeg") center/cover no-repeat;
   filter: blur(2px);
   z-index: 0;
 }
@@ -649,6 +650,7 @@ body,
     width: 100vw;
     height: auto;
     padding: 3em 2em;
+    padding-bottom: 0em;
     background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0.96) 0%,
@@ -670,14 +672,13 @@ body,
   /* Canvas becomes a block section under the text */
   .hero-canvas-wrapper {
     position: relative;
-    order: 2;                     /* ⬇️ second on mobile */
+    order: 2;                   
     top: auto;
     bottom: auto;
     left: 0;
     right: 0;
     width: 100%;
-    height: 30vh;                 /* adjust as you like */
-    overflow: hidden;
+    height: 50vh;                
     background: radial-gradient(
       circle at center,
       #1a1a1a 0%,
@@ -693,8 +694,8 @@ body,
 
   /* Optional: move the icon bar up a bit on small screens */
   .section-icon-bar {
-    right: 1.5rem;
-    bottom: 4rem;
+    right: 5rem;
+    bottom: 1rem;
     padding: 0.5rem 0.8rem;
   }
 
