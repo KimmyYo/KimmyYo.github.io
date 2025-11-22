@@ -637,9 +637,9 @@ body,
 
 /* ---------- Responsive: stack panel on top, canvas below ---------- */
 @media (max-width: 768px) {
-  html,
-  body,
-  #root {
+html,
+body,
+#root {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Helvetica, Arial, sans-serif;
   }
@@ -680,7 +680,7 @@ body,
     position: relative;
     order: 2;                   
     top: auto;
-    bottom: auto;
+    bottom: 5em;
     left: 0;
     right: 0;
     width: 100%;
