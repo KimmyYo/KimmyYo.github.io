@@ -1,5 +1,4 @@
 /* ---------- Global ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
 html,
 body,
 #root {
@@ -694,7 +693,8 @@ body,
 
   /* Optional: move the icon bar up a bit on small screens */
   .section-icon-bar {
-    right: 5rem;
+    background: none;
+    right: 4rem;
     bottom: 1rem;
     padding: 0.5rem 0.8rem;
   }
