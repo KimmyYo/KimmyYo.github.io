@@ -47,7 +47,7 @@ export default function MuseumModel({ url, onLoaded, onProjectsReady }) {
     scene.traverse((o) => {
       // ✅ Soften lights but keep them
       if (o.isLight) {
-        o.intensity *= 0.05
+        o.intensity *= 0.03
         return
       }
 
