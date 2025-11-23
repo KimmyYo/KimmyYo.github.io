@@ -19,7 +19,14 @@ const PROJECT_MESH_NAMES = new Set([
   'Curve002',
   'Spiral',
   'Spiral_1',
-  'Spiral_2'
+  'Spiral_2',
+  'Spiral_3',
+  'Spiral_4',
+  'Spiral_5',
+  'Spiral_6',
+  'Spiral_7',
+
+
 ])
 
 /**
@@ -40,13 +47,12 @@ export default function MuseumModel({ url, onLoaded, onProjectsReady }) {
     scene.traverse((o) => {
       // ✅ Soften lights but keep them
       if (o.isLight) {
-        o.intensity *= 0.03
+        o.intensity *= 0.05
         return
       }
 
       // Only work with real meshes
       if (!o.isMesh) return
-
       // Enable shadows on meshes
       o.castShadow = true
       o.receiveShadow = true
